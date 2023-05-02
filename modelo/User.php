@@ -51,7 +51,48 @@ class User extends Conexion
     }
     
     public function getUsuario($email){
-  
+        // creamos el metodo getUsuario que permite consultar un usuario
+        $conexion= Conexion::conectar()->prepare("Select * from usuarios where usuario=:email");
+        // creando la sentencia
+        $conexion->bindParam(":email", $email, PDO::PARAM_STR);    
+        // preparando los campos protegidos por pdo
+        $conexion->execute();
+        // ejecutar la sentencia
+        if($respuesta = $conexion->fetch()){
+          // validamos si la consulta devolvio algun resultado
+            return [
+              'id'                => $respuesta['id'],
+              'email'             => $respuesta['usuario'],
+              'clave'             => $respuesta['clave'],
+              'nombre'            => $respuesta['nombre'],
+              'tipoUser'          => $respuesta['tipo'],
+              'fecCreacion'       => $respuesta['creado'],
+              'fecActualizacion'  => $respuesta['actualizado'],
+            ];
+            // creamos el array que se va a devolver
+        }
     }
 
+
+    public function getPaciente($doc){
+      // creamos el metodo getPaciente que permite consultar un paciente
+      $conexion= Conexion::conectar()->prepare("Select * from pacientes where documento=:documento");
+      // creando la sentencia
+      $conexion->bindParam(":documento", $doc, PDO::PARAM_STR);    
+      // preparando los campos protegidos por pdo
+      $conexion->execute();
+      // ejecutar la sentencia
+      if($respuesta = $conexion->fetch()){
+        // validamos si la consulta devolvio algun resultado
+          return [
+            'id'                => $respuesta['id'],
+            'documento'         => $respuesta['documento'],
+            'nombre'            => $respuesta['nombre'],
+            'telefono'          => $respuesta['telefono'],
+            'fecnac'            => $respuesta['fecnac'],
+            'genero'            => $respuesta['genero'],
+          ];
+          // creamos el array que se va a devolver
+      }
+  }
 }

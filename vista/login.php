@@ -1,5 +1,6 @@
 <?php
 session_start();
+// inicializamos las variables de sesion
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +38,7 @@ session_start();
                     </div>
                 </form>
                 <?php
-
+                    include_once "controlador/loginController.php";
                 ?>
             </div>
         </div>
